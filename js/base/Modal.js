@@ -5,6 +5,10 @@ var AmpersandView = require('ampersand-view'),
 require('../semantic-shim');
 
 module.exports = AmpersandView.extend({
+    render: function(){
+        AmpersandView.prototype.render.call(this, arguments);
+        if(this.onRender) this.onRender();
+    },
     show: function(){
         var $modal = this.$modal = $(tpl());
         this.render();
@@ -23,6 +27,7 @@ module.exports = AmpersandView.extend({
         });
         $('#modal-region').html('').append($modal);
         $modal.modal('show');
+        if(this.onShow) this.onShow();
     },
     hide: function(){
         this.$modal.modal('hide');
