@@ -2,5 +2,13 @@
   "name": "ss15-vector",
   "root": "./",
   "clean_urls": true,
-  "error_page": "404.html"
+  "error_page": "404.html",
+  "exclude": [
+    "bower.json",
+    "server.js",
+    "node_modules"
+  ],
+  "routes": {
+    "**": "index.html"
+  }
 }
