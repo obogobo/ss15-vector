@@ -5,3 +5,4 @@ node_modules
 *~
 .snippets
 bower_components/
+js/index.js

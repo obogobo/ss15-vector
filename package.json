@@ -21,6 +21,9 @@
     "coffee-script": "~1.8.0",
     "less-middleware": "~1.0.4",
     "browserify-middleware": "~4.1.0",
-    "node-uuid": "~1.4.2"
+    "node-uuid": "~1.4.2",
+    "gulp-cli": "~0.1.5",
+    "gulp": "~3.8.10",
+    "gulp-browserify2": "0.0.2"
   }
 }
