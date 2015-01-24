@@ -1,6 +1,7 @@
 var AmpersandRouter = require('ampersand-router'),
     LandingView = require('./landing/LandingView'),
     MainView = require('./main/MainView'),
+    InviteDialog = require('./main/InviteDialog')
     $ = require('jquery');
 
 
@@ -17,5 +18,6 @@ var Router = module.exports = AmpersandRouter.extend({
   },
   room: function(id){
     this.setView(new MainView());
+    new InviteDialog({id: id}).show();
   }
 });

@@ -17,6 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "uikit": "~2.16.2"
+    "uikit": "~2.16.2",
+    "semantic-ui": "~1.8.0"
   }
 }
