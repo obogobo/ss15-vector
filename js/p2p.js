@@ -2,6 +2,11 @@ var self;
 
 $.getScript('http://cdn.peerjs.com/0.3.9/peer.js')
     .success(function () {
+
+
+
+
+
         self = new Peer('jcw', { key: 'lwjd5qra8257b9' });
 
         self.on('connection', function(conn) {
