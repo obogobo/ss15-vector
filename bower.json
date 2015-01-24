@@ -1,0 +1,24 @@
+{
+  "name": "vector",
+  "version": "0.0.0",
+  "homepage": "https://github.com/staticshowdown/ss15-vector",
+  "authors": [
+    "Ryan",
+    "Ming",
+    "Jackson",
+    "Jason"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.15",
+    "ampersand-model": "ampersandjs/ampersand-model#~4.0.3",
+    "require-jade": "deedubs/require-jade#~0.0.3"
+  }
+}
