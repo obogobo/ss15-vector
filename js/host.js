@@ -7,7 +7,7 @@ $.getScript('http://cdn.peerjs.com/0.3.9/peer.js')
         peer.on('connection', function (conn) {
             conn.on('open', function () {
                 console.log('Incoming connection:', conn.peer);
-                / debugger;
+                // debugger;
 
                 // onData handler
                 conn.on('data', function (data) {
