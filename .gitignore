@@ -1,0 +1,5 @@
+.divshot-cache/
+node_modules
+.*.sw*
+*.log
+*~
