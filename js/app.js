@@ -1,18 +1,19 @@
-// # Require.JS configuration
-requirejs.config({
-  paths: {
-    'ampersand-model': '/bower_components/ampersand-model/ampersand-model',
-    'ampersand-router': '/bower_components/ampersand-model/ampersand-router',
-    'ampersand-view': '/bower_components/ampersand-model/ampersand-view',
-    'ampersand-state': '/bower_components/ampersand-model/ampersand-state',
-    'ampersand-sync': '/bower_components/ampersand-model/ampersand-sync'
-  },
+var Model = window.Model = require('ampersand-model');
 
-  shim: {
-    'ampersand-model':
-  }
-});
+var peer = new Peer('mullery1', { key: 'lwjd5qra8257b9' });
 
-require(['./Router'], function(Router){
+peer.on('connection', function(conn) {
+  console.log(arguments);
+
+  conn.on('open', function(id) {
+    console.log('Opened, now id: ', id);
+    // Receive messages
+    conn.on('data', function(data) {
+      console.log('Received', data);
+      debugger;
+    });
+  });
+
+  conn.send('Sup motherfuckers!');
 
 });
