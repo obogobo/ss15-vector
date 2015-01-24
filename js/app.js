@@ -1,3 +1,10 @@
+var Router = require('./Router');
+
+var router = new Router();
+router.history.start();
+
+/*
+
 var Model = window.Model = require('ampersand-model');
 
 var peer = new Peer('mullery1', { key: 'lwjd5qra8257b9' });
@@ -16,4 +23,4 @@ peer.on('connection', function(conn) {
 
   conn.send('Sup motherfuckers!');
 
-});
+});*/

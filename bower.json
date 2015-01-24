@@ -17,12 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "~2.1.15",
-    "ampersand-model": "ampersandjs/ampersand-model#~4.0.3",
-    "require-jade": "deedubs/require-jade#~0.0.3",
-    "ampersand-router": "ampersandjs/ampersand-router#~1.0.7",
-    "ampersand-view": "ampersandjs/ampersand-view#~7.2.0",
-    "ampersand-state": "ampersandjs/ampersand-state#~4.4.4",
-    "ampersand-sync": "ampersandjs/ampersand-sync#~3.0.3"
+    "uikit": "~2.16.2"
   }
 }

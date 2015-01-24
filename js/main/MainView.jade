@@ -1,0 +1,28 @@
+div(style='padding-top: 45px;')
+  .ui.fixed.purple.inverted.tiered.main.menu
+    a.item(data-action="toggle-modules")
+      i.plus.icon
+      |  Cards
+    .right.menu
+      a.item
+        i.mail.icon.outline
+        |  Invite
+      a.item
+        i.sign.out.icon
+        |  Leave
+    .ui.sub.menu(style='display:none;', data-hook='modules-submenu')
+      a.item
+        i.comments.icon
+        |  Text chat
+      a.disabled.item
+        i.music.icon
+        |  Music stream
+      a.disabled.item
+        i.file.icon
+        |  File drop
+      a.disabled.item
+        i.record.icon
+        |  Webcam stream
+  .ui.container(style="margin: auto; max-width: 1000px;"): .ui.two.column.grid
+    .column
+    .column
