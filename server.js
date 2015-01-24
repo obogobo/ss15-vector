@@ -16,7 +16,7 @@ app.set('views', __dirname);
 
 app.set('view engine', 'jade');
 
-app.use('/js/app.js', browserify('./js/app.js'));
+app.use('/js/index.js', browserify('./js/app.js'));
 
 app.use(require('less-middleware')(__dirname));
 
