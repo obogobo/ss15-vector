@@ -4,6 +4,8 @@ div(style='padding-top: 35px;')
             i.users.icon
             span.text  &hellip;
             .menu: .ui.comments(style='padding:1em;')
+        input(type='file', style='display:none;', id='music-picker', accept='audio/*')
+        video(id='current-music', autoplay, style='display:none;')
         a.item(data-action="now-playing")
             i.play.icon
             span  No music playing

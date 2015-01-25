@@ -29,33 +29,6 @@ module.exports = Card.extend({
         })
     },
 
-    startAudioStream: function(e) {
-        var self = this,
-            reader = new FileReader(),
-            context = new AudioContext(),
-            gainNode = context.createGain();
-
-        gainNode.connect(context.destination);
-
-        reader.onload = function(e) {
-            context.decodeAudioData(e.target.result, function(buffer) {
-                var soundSource = context.createBufferSource(),
-                    destination;
-
-                soundSource.buffer = buffer;
-                soundSource.start(0, 0 / 1000);
-                soundSource.connect(gainNode);
-
-                destination = context.createMediaStreamDestination();
-                soundSource.connect(destination);
-
-                self.stream = destination.stream;
-            });
-        };
-
-        reader.readAsArrayBuffer(e.target.files[0]);
-    },
-
     startVideoStream: function() {
         var view = this;
 

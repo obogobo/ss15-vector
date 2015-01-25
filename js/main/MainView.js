@@ -17,10 +17,14 @@ module.exports = AmpersandView.extend({
       for(var i=100;i<5000;i*=1.5){
           setTimeout(this.updateUserList.bind(this), i);
       }
+
+      this.peer.on('call:received', this.onCallReceived.bind(this));
   },
   events: {
     'click [data-action="toggle-modules"]': 'toggleModules',
-    'click [data-action="toggle-view"]': 'toggleView'
+    'click [data-action="toggle-view"]': 'toggleView',
+    'click [data-action="now-playing"]': 'selectMusic',
+    'change #music-picker': 'onMusicPickerSelection'
   },
   updateUserList: function(){
       if(this.el){
@@ -42,6 +46,57 @@ module.exports = AmpersandView.extend({
               $list.append(userListItemTpl({username:peer,image: mkAvatar(peer)}));
           });
       }
+  },
+  selectMusic: function(){
+      $('#music-picker').click();
+  },
+  onCallReceived: function(call){
+        var self = this,
+            meta = call.metadata;
+
+        $('[data-action="now-playing"] > span').text(meta.filename);
+
+        call.answer(null); // Answer the call with an A/V stream.
+        call.on('stream', function(remoteStream) {
+            // Show stream in some video/canvas element.
+            $('#current-music').prop('src', URL.createObjectURL(remoteStream));
+        });
+
+  },
+  onMusicPickerSelection: function(e) {
+      var self = this,
+          reader = new FileReader(),
+          context = new AudioContext(),
+          gainNode = context.createGain(),
+          musicFile;
+
+      gainNode.connect(context.destination);
+
+      reader.onload = function(e) {
+          context.decodeAudioData(e.target.result, function(buffer) {
+              var soundSource = context.createBufferSource(),
+                  destination,
+                  stream;
+
+              soundSource.buffer = buffer;
+              soundSource.start(0, 0 / 1000);
+              soundSource.connect(gainNode);
+
+              destination = context.createMediaStreamDestination();
+              soundSource.connect(destination);
+
+              stream = destination.stream;
+
+              self.peer.broadcastStream(stream, {
+                  type: 'music',
+                  filename: musicFile.name
+              });
+              
+              $('[data-action="now-playing"] > span').text(musicFile.name);
+          });
+      };
+
+      reader.readAsArrayBuffer(musicFile = e.target.files[0]);
   },
   render: function(){
     AmpersandView.prototype.render.apply(this, arguments);
