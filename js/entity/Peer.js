@@ -166,12 +166,6 @@ module.exports = ampersandModel.extend({
         }).filter(_.identity);
     },
 
-    receiveCall: function() {
-        self.on('call', function(call) {
-            self.trigger('call:received', call);
-        });
-    },
-
     removePeer:  $.noop,
 
     extraProperties: 'allow'
