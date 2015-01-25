@@ -64,4 +64,5 @@ var Router = module.exports = AmpersandRouter.extend({
             location.hash = '#chat';
         }
     }
+
 });

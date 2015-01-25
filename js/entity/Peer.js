@@ -28,6 +28,7 @@ module.exports = ampersandModel.extend({
 
         // send available to connectTo
         socket.on('open', function() {
+            alert('ready');
             self.trigger('socket:open');
         });
 
@@ -55,8 +56,7 @@ module.exports = ampersandModel.extend({
 
         _.forEach(self.getPeers(), function(peerID){
             _.forEach(self.socket.connections[peerID], function(conn){
-                conn.send(event);
-                console.log('>>>>>',event);
+                conn && conn.open && conn.send && conn.send(event);
             });
         });
     },
@@ -115,6 +115,14 @@ module.exports = ampersandModel.extend({
         });
 
         return connection;
+    },
+
+    getOrCreateConnectionTo: function(peer){
+        if(!_.contains(this.getConnectedPeers(), peer))
+            return this.connectToPeer(peer);
+        return this.socket.connections[peer].filter(function(conn){
+            return conn.open;
+        })[0];
     },
 
     leaveRoom: function() {

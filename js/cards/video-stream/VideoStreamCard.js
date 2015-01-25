@@ -7,6 +7,9 @@ module.exports = Card.extend({
         title: 'Video Stream',
         icon: 'comments'
     },
+    events: {
+        'change #file': 'startAudioStream'
+    },
     calls: {},
     initialize: function(options) {
         var view = this;
@@ -30,6 +33,33 @@ module.exports = Card.extend({
         })
     },
 
+    startAudioStream: function(e) {
+        var self = this,
+            reader = new FileReader(),
+            context = new AudioContext(),
+            gainNode = context.createGain();
+
+        gainNode.connect(context.destination);
+
+        reader.onload = function(e) {
+            context.decodeAudioData(e.target.result, function(buffer) {
+                var soundSource = context.createBufferSource(),
+                    destination;
+
+                soundSource.buffer = buffer;
+                soundSource.start(0, 0 / 1000);
+                soundSource.connect(gainNode);
+
+                destination = context.createMediaStreamDestination();
+                soundSource.connect(destination);
+
+                self.stream = destination.stream;
+            });
+        };
+
+        reader.readAsArrayBuffer(e.target.files[0]);
+    },
+
     startVideoStream: function() {
         var view = this;
 
@@ -45,6 +75,7 @@ module.exports = Card.extend({
     bindCallEvents: function(call) {
         var $video = $('<video id="' + call.peer + '" autoplay>'),
             view = this;
+
         call.on('stream', function(remoteStream) {
             // Show stream in some video/canvas element.
             if (!view.calls[call.peer]) {
