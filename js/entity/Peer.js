@@ -56,7 +56,7 @@ module.exports = ampersandModel.extend({
 
         _.forEach(self.getPeers(), function(peerID){
             _.forEach(self.socket.connections[peerID], function(conn){
-                conn.open && conn.send && conn.send(event);
+                conn && conn.open && conn.send && conn.send(event);
             });
         });
     },
