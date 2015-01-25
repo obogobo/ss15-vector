@@ -23,7 +23,7 @@ module.exports = ampersandModel.extend({
     createSocket: function() {
         var self = this,
             socket = self.socket = new Peer(self.username, {  // register w/ peer.js
-                key: 'lwjd5qra8257b9'
+                key: 'ecu8tcbbg0dg3nmi'
             });
 
         // send available to connectTo
@@ -142,12 +142,6 @@ module.exports = ampersandModel.extend({
                 return conn.open;
             }).length) && peerName;
         }).filter(_.identity);
-    },
-
-    receiveCall: function() {
-        self.on('call', function(call) {
-            self.trigger('call:received', call);
-        });
     },
 
     removePeer:  $.noop,
