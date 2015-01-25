@@ -3,7 +3,8 @@ var AmpersandView = require('ampersand-view'),
     _ = require('lodash'),
     TextChatCard = require('../cards/text-chat/TextChatCard'),
     userListItemTpl = require('./UserListItem.jade'),
-    VideoStreamCard = require('../cards/video-stream/VideoStreamCard');
+    VideoStreamCard = require('../cards/video-stream/VideoStreamCard'),
+    mkAvatar = require('../util/avatar');
 
 module.exports = AmpersandView.extend({
   template: require('./MainView.jade'),
@@ -37,9 +38,12 @@ module.exports = AmpersandView.extend({
               return n+' people'
           })());
           $list.empty();
-          $list.append(userListItemTpl({username:'You ('+this.peer.username+')'}));
+          $list.append(userListItemTpl({
+              username:'You ('+this.peer.username+')',
+              image: mkAvatar(this.peer.username)
+          }));
           _.forEach(peers, function(peer){
-              $list.append(userListItemTpl({username:peer}));
+              $list.append(userListItemTpl({username:peer,image: mkAvatar(peer)}));
           });
       }
   },

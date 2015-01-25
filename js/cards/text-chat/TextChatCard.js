@@ -1,5 +1,6 @@
 var Card = require('../Card'),
-    messageTemplate = require('./Message.jade');
+    messageTemplate = require('./Message.jade'),
+    mkAvatar = require('../../util/avatar');
 
 module.exports = Card.extend({
     innerTemplate: require('./TextChatCard.jade'),
@@ -36,6 +37,7 @@ module.exports = Card.extend({
         if(data.type !== 'text-chat') return;
         this.pushMessage({
             sender: event.connection.peer,
+            image: mkAvatar(event.connection.peer),
             contents: data.content
         });
     },
@@ -46,6 +48,7 @@ module.exports = Card.extend({
         $field.val('');
         this.pushMessage({
             sender: this.peer.username,
+            image: mkAvatar(this.peer.username),
             contents: entry
         });
         if(this.peer){
