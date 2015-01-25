@@ -24,7 +24,7 @@ div(style='padding-top: 35px;')
                     .item: .ui.toggle.checkbox
                         input(type='checkbox', data-hook='audio-active')
                         label Audio
-            a.ui.link.item
+            a.ui.link.item(data-action='toggle-invite')
                 i.mail.icon.outline
                 span.text  Invite
             a.item(href='/')
@@ -37,6 +37,11 @@ div(style='padding-top: 35px;')
             a.item(data-action="toggle-view", data-view='videostream')
                 i.record.icon
                 |  Webcam stream
+        .ui.sub.right.menu(style='display:none;', data-hook='invite-submenu')
+            a.item(data-hook='invite-link')
+            a.item(data-hook='send-invite')
+                i.send.icon
+                |  Send email
     .ui.container(style="margin: auto; max-width: 1000px; padding: 2em;"): .ui.stackable.grid
         .column.card-container(id='videostream' style='display: none;')
         .column.card-container.sixteen.wide(id='textchat')

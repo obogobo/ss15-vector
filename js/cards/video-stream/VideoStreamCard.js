@@ -7,9 +7,6 @@ module.exports = Card.extend({
         title: 'Video Stream',
         icon: 'comments'
     },
-    events: {
-        'change #file': 'startAudioStream'
-    },
     calls: {},
     initialize: function(options) {
         var view = this;
@@ -57,9 +54,6 @@ module.exports = Card.extend({
             }
         });
 
-        call.on('close', function() {
-            debugger;
-        });
     },
 
     makeCalls: function() {

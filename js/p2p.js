@@ -18,8 +18,6 @@ $.getScript('http://cdn.peerjs.com/0.3.9/peer.js')
             })
         });
 
-        debugger;
-
         // TODO: connect to everyone else in Firebase!
         var connection = socket.connect('mcbex');
         connection.on('open', function () {

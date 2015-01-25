@@ -24,7 +24,8 @@ module.exports = AmpersandView.extend({
     'click [data-action="toggle-modules"]': 'toggleModules',
     'click [data-action="toggle-view"]': 'toggleView',
     'click [data-action="now-playing"]': 'selectMusic',
-    'change #music-picker': 'onMusicPickerSelection'
+    'change #music-picker': 'onMusicPickerSelection',
+    'click [data-action="toggle-invite"]': 'toggleInvite'
   },
   updateUserList: function(){
       if(this.el){
@@ -63,7 +64,6 @@ module.exports = AmpersandView.extend({
             // Show stream in some video/canvas element.
             $('#current-music').prop('src', URL.createObjectURL(remoteStream));
         });
-        debugger;
         call.answer(); // Answer the call with an A/V stream.
 
   },
@@ -75,6 +75,7 @@ module.exports = AmpersandView.extend({
           musicFile;
 
       gainNode.connect(context.destination);
+      gainNode.gain.value = 0;
 
       reader.onload = function(e) {
           context.decodeAudioData(e.target.result, function(buffer) {
@@ -127,13 +128,23 @@ module.exports = AmpersandView.extend({
     return this;
   },
   toggleModules: function(){
-    var $submenu = $(this.queryByHook('modules-submenu')),
-        visible = $submenu.is(':visible');
-    if(visible){
-      $submenu.slideUp();
-    } else {
-      $submenu.slideDown();
-    }
+      var $submenu = $(this.queryByHook('modules-submenu')),
+      visible = $submenu.is(':visible');
+      if(visible){
+          $submenu.slideUp();
+      } else {
+          $submenu.slideDown();
+      }
+  },
+
+  toggleInvite: function(){
+      var $submenu = $(this.queryByHook('invite-submenu')),
+      visible = $submenu.is(':visible');
+      if(visible){
+          $submenu.slideUp();
+      } else {
+          $submenu.slideDown();
+      }
   },
   getNumVisibleViews: function() {
     return $(this.el).find('.card-container:visible').length;

@@ -22,7 +22,6 @@ module.exports = AmpersandView.extend({
         var $modalRegion = $('#modal-region'),
             $modal = this.$modal = $(this.render().el),
             $fileSelect = $(this.queryByHook('real-file-input'));
-        debugger;
         if(!$modalRegion.length){
             $('body').append($('<div>', {id:'modal-region'}));
             $modalRegion = $('#modal-region');

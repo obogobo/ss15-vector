@@ -16,8 +16,6 @@
     var gainNode = context.createGain();
     gainNode.connect(context.destination);
 
-    debugger;
-
     document.querySelector('#file').onchange = function() {
         var reader = new FileReader();
         reader.onload = function(e) {
@@ -30,7 +28,6 @@
                 var destination = context.createMediaStreamDestination();
                 soundSource.connect(destination);
 
-                debugger;
             });
 
         };
