@@ -118,6 +118,14 @@ module.exports = ampersandModel.extend({
         return connection;
     },
 
+    getOrCreateConnectionTo: function(peer){
+        if(!_.contains(this.getConnectedPeers(), peer))
+            return this.connectToPeer(peer);
+        return this.socket.connections[peer].filter(function(conn){
+            return conn.open;
+        })[0];
+    },
+
     leaveRoom: function() {
         var self = this;
 

@@ -1,0 +1,5 @@
+.ui.raised.segment(style="display:block; min-height: 45px; margin: 2em;")
+    i.file.icon
+    |  #{sender} is sharing the file #{' '}
+    a(data-file-id=id, data-file-sender=sender, style='cursor:pointer;')= name
+    .ui.progress(style='display:none;', data-file-progress=id): .bar: .progress
