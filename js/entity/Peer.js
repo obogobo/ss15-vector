@@ -23,11 +23,12 @@ module.exports = ampersandModel.extend({
     createSocket: function() {
         var self = this,
             socket = self.socket = new Peer(self.username, {  // register w/ peer.js
-                key: 'lwjd5qra8257b9'
+                key: 'ecu8tcbbg0dg3nmi'
             });
 
         // send available to connectTo
         socket.on('open', function() {
+            alert('ready');
             self.trigger('socket:open');
         });
 

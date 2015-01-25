@@ -8,8 +8,10 @@ module.exports = Card.extend({
     },
     events: {
         'click div[data-action="make-call"]': 'makeCall',
-        'click div[data-action="answer-call"]': 'answerCall'
+        'click div[data-action="answer-call"]': 'answerCall',
+        'change #file': 'startAudioStream'
     },
+
     initialize: function(options) {
         var view = this;
 
@@ -27,11 +29,38 @@ module.exports = Card.extend({
         })
     },
 
+    startAudioStream: function(e) {
+        var self = this,
+            reader = new FileReader(),
+            context = new AudioContext(),
+            gainNode = context.createGain();
+
+        gainNode.connect(context.destination);
+
+        reader.onload = function(e) {
+            context.decodeAudioData(e.target.result, function(buffer) {
+                var soundSource = context.createBufferSource(),
+                    destination;
+
+                soundSource.buffer = buffer;
+                soundSource.start(0, 0 / 1000);
+                soundSource.connect(gainNode);
+
+                destination = context.createMediaStreamDestination();
+                soundSource.connect(destination);
+
+                self.stream = destination.stream;
+            });
+        };
+
+        reader.readAsArrayBuffer(e.target.files[0]);
+    },
+
     startVideoStream: function() {
         var view = this;
 
         navigator.getUserMedia({ video: true, audio: true }, function(stream) {
-            view.stream = stream;
+            // view.stream = stream;
             $('#my-vidya').prop('src', URL.createObjectURL(stream));
         }, function(err) {
             console.log('Failed to get local stream' ,err);
@@ -39,7 +68,7 @@ module.exports = Card.extend({
     },
 
     makeCall: function(e) {
-        var receiver = 'mcbex1',
+        var receiver = 'jcw',
             call = this.peer.socket.call(receiver, this.stream);
 
         $(e.target).text('Calling ' + receiver + '...');
