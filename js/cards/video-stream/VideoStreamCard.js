@@ -10,13 +10,14 @@ module.exports = Card.extend({
     events: {
         'change #file': 'startAudioStream'
     },
-    calls: {},
     initialize: function(options) {
         var view = this;
 
         this.peer = options.peer;
+        this.startVideoStream();
         this.on('show', function() {
-            view.startVideoStream();
+            $('#my-vidya').prop('src', URL.createObjectURL(view.stream)).prop('muted', true);
+            view.makeCalls();
         });
 
         this.on('hide', function() {
@@ -25,11 +26,7 @@ module.exports = Card.extend({
         });
 
         this.peer.on('call:received', function(call) {
-            if ($('#my-vidya').is(':visible')) {
-                view.answerCall(call);
-            } else {
-                call.close(view.stream);
-            }
+              view.answerCall(call);
         })
     },
 
@@ -64,9 +61,7 @@ module.exports = Card.extend({
         var view = this;
 
         navigator.getUserMedia({ video: true, audio: true }, function(stream) {
-            $('#my-vidya').prop('src', URL.createObjectURL(stream)).prop('muted', true);
             view.stream = stream;
-            view.makeCalls();
         }, function(err) {
             console.log('Failed to get local stream' ,err);
         });
@@ -77,14 +72,11 @@ module.exports = Card.extend({
 
         call.on('stream', function(remoteStream) {
             // Show stream in some video/canvas element.
-            if (!view.calls[call.peer]) {
-                view.calls[call.peer] = call;
-                $video.prop('src', URL.createObjectURL(remoteStream)).insertAfter('#my-vidya');
-            }
+            $video.prop('src', URL.createObjectURL(remoteStream)).insertAfter('#my-vidya');
         });
 
         call.on('close', function() {
-            debugger;
+            //debugger;
         });
     },
 
@@ -93,19 +85,15 @@ module.exports = Card.extend({
             view = this;
 
         _.forEach(receivers, function(r) {
-            if (!view.calls[r]) {
-                view.bindCallEvents(view.peer.socket.call(r, view.stream));
-            }
+            view.bindCallEvents(view.peer.socket.call(r, view.stream));
         });
     },
 
     answerCall: function(call) {
         var view = this;
         navigator.getUserMedia({ video: true, audio: true }, function(stream) {
-            if (!view.calls[call.peer]) {
-                call.answer(stream); // Answer the call with an A/V stream.
-                view.bindCallEvents(call);
-            }
+            call.answer(stream); // Answer the call with an A/V stream.
+            view.bindCallEvents(call);
         }, function(err) {
             console.log('Failed to get local stream' ,err);
         });
