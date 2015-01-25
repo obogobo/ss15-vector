@@ -55,7 +55,7 @@ module.exports = AmpersandView.extend({
         var self = this,
             meta = call.metadata || {};
 
-        if(!call.metadata && !call.metadata.filename) return;
+        if(!call.metadata || !call.metadata.filename) return;
 
         $('[data-action="now-playing"] > span').text(meta.filename || 'Untitled');
 
