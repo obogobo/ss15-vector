@@ -16,8 +16,12 @@ module.exports = Card.extend({
         this.peer = options.peer;
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-        this.on('rendered', function() {
+        this.on('show', function() {
             view.startVideoStream();
+        });
+
+        this.on('hide', function() {
+            // end video stream here
         });
 
         this.peer.on('call:received', function(call) {
