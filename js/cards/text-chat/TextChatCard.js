@@ -26,6 +26,7 @@ module.exports = Card.extend({
         var $field = $(e.target), entry = $field.val();
         if(e.which !== 13) return;
         $field.val('');
+        $(this.queryByHook('chat-content')).append('<p><tt>[me]</tt>'+entry+'</p>');
         if(this.peer){
             console.log('broadcasting', entry)
             this.peer.broadcast({
