@@ -48,16 +48,30 @@ module.exports = ampersandModel.extend({
 
         socket.on('call', function(call) {
             self.trigger('call:received', call);
+            _.forOwn(self.socket.connections, function(conns, userID){
+                _.forEach(conns, function(conn){
+                    if(conn.metadata && conn.metadata.type === 'music') {
+                        conn.close();
+                    }
+                });
+            });
         });
     },
 
     broadcast: function(event){
         var self = this;
 
-        _.forEach(self.getPeers(), function(peerID){
+        _.forEach(self.getConnectedPeers(), function(peerID){
             _.forEach(self.socket.connections[peerID], function(conn){
                 conn && conn.open && conn.send && conn.send(event);
             });
+        });
+    },
+
+    broadcastStream: function(stream, metadata){
+        var self = this;
+        _.forEach(self.getConnectedPeers(), function(peerID){
+            self.socket.call(peerID, stream, {metadata: metadata});
         });
     },
 

@@ -180,7 +180,6 @@ module.exports = Card.extend({
                 type: 'file:request',
                 id: fileID
             });
-            // $progress.show().progress({percent: 0});
         }.bind(this));
         $chatContent.append($el);
     }
