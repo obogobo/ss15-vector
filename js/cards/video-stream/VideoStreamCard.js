@@ -20,7 +20,7 @@ module.exports = Card.extend({
             view.startVideoStream();
         });
 
-        this.on('call:received', function(call) {
+        this.peer.on('call:received', function(call) {
             view.answerCall(call);
         })
     },

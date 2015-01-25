@@ -43,6 +43,10 @@ module.exports = ampersandModel.extend({
                 conn.send('Hey, ' + conn.peer);
             });
         });
+
+        socket.on('call', function(call) {
+            self.trigger('call:received', call);
+        });
     },
 
     broadcast: function(event){
@@ -111,12 +115,6 @@ module.exports = ampersandModel.extend({
         var self = this;
 
         return _.keys(self.socket.connections);
-    },
-
-    receiveCall: function() {
-        self.on('call', function(call) {
-            self.trigger('call:received', call);
-        });
     },
 
     removePeer:  $.noop,
