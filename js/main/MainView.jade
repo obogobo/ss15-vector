@@ -12,16 +12,16 @@ div(style='padding-top: 35px;')
         i.sign.out.icon
         |  Leave
     .ui.sub.menu(style='display:none;', data-hook='modules-submenu')
-      a.item
+      a.item(data-action="load-view", data-view='textchat')
         i.comments.icon
         |  Text chat
-      a.disabled.item
+      a.disabled.item(data-action="load-view")
         i.music.icon
         |  Music stream
-      a.disabled.item
+      a.disabled.item(data-action="load-view")
         i.file.icon
         |  File drop
-      a.disabled.item
+      a.item(data-action="load-view", data-view='videostream')
         i.record.icon
         |  Webcam stream
   .ui.container(style="margin: auto; max-width: 1000px; padding: 2em;"): .ui.one.column.stackable.grid // <= change to two
