@@ -1,8 +1,9 @@
 div(style='padding-top: 35px;')
     .ui.fixed.purple.inverted.tiered.main.menu
-        a.item(data-action="online-users")
+        a.ui.dropdown.item(data-action="online-users")
             i.users.icon
-            span  0 users online
+            span.text  &hellip;
+            .menu: .ui.comments(style='padding:1em;')
         a.item(data-action="now-playing")
             i.play.icon
             span  No music playing
@@ -10,7 +11,7 @@ div(style='padding-top: 35px;')
             i.plus.icon
             |  Cards
         .right.menu
-            a.ui.pointing.dropdown.link.item(data-hook='username-display')
+            a.ui.dropdown.link.item(data-hook='username-display')
                 i.user.icon
                 span.text
                 .menu
@@ -21,10 +22,10 @@ div(style='padding-top: 35px;')
                     .item: .ui.toggle.checkbox
                         input(type='checkbox', data-hook='audio-active')
                         label Audio
-            a.item
+            a.ui.link.item
                 i.mail.icon.outline
-                |  Invite
-            a.item
+                span.text  Invite
+            a.item(href='/')
                 i.sign.out.icon
                 |  Leave
         .ui.sub.menu(style='display:none;', data-hook='modules-submenu')
