@@ -1,15 +1,10 @@
-var self;
+var socket;
 
 $.getScript('http://cdn.peerjs.com/0.3.9/peer.js')
     .success(function () {
+        socket = new Peer('jcw', { key: 'lwjd5qra8257b9' });
 
-
-
-
-
-        self = new Peer('jcw', { key: 'lwjd5qra8257b9' });
-
-        self.on('connection', function(conn) {
+        socket.on('connection', function(conn) {
             conn.on('open', function() {
                 console.log('Incoming connection:', conn.peer);
 
@@ -26,7 +21,7 @@ $.getScript('http://cdn.peerjs.com/0.3.9/peer.js')
         debugger;
 
         // TODO: connect to everyone else in Firebase!
-        var connection = self.connect('mcbex');
+        var connection = socket.connect('mcbex');
         connection.on('open', function () {
             console.log('Opened connection:', connection.peer);
 

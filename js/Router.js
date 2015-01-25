@@ -3,6 +3,7 @@ var AmpersandRouter = require('ampersand-router'),
     MainView = require('./main/MainView'),
     InviteDialog = require('./main/InviteDialog'),
     CreateUserDialog = require('./create/CreateUserDialog'),
+    JoinDialog = require('./join/JoinDialog'),
     $ = require('jquery');
 
 
@@ -10,7 +11,8 @@ var Router = module.exports = AmpersandRouter.extend({
     routes: {
         "": "landing",
         "_/:id": "joinRoom",
-        "new": "newRoom"
+        "new": "newRoom",
+        'join': 'joinRoom'
     },
     setView: function(view){
         $('body').html('').append(view.render().el);
@@ -27,7 +29,13 @@ var Router = module.exports = AmpersandRouter.extend({
         dialog.show();
         dialog.on('peer:new', this.createRoomWithPeer.bind(this));
     },
+    joinRoom: function(){
+        var dialog = new JoinDialog();
+        dialog.show();
+        dialog.on('peer:new', this.createRoomWithPeer.bind(this));
+    },
     createRoomWithPeer: function(peer){
-        window.peer = peer; debugger;
+        var view = new MainView({peer: peer});
+        this.setView(view);
     }
 });

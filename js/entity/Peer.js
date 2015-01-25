@@ -28,10 +28,29 @@ module.exports = ampersandModel.extend({
                 self.trigger('connection:open', conn);
 
                 // incoming data events
-                conn.on('data', self.onData.bind(self));
+                conn.on('data', function(data) {
+                    console.log('[' + conn.peer + ']', data);
+                    self.onData(data);
+                });
 
                 // send an ack
                 conn.send('Hey, ' + conn.peer);
+            });
+        });
+    },
+
+    broadcast: function(event){
+        var self = this;
+
+        _.forEach(self.getPeers(), function(peerID){
+            var conns = _.findWhere(self.socket.connections[peerID], {
+                open: true,
+                disconnected: false,
+                destroyed: false
+            });
+            _.forEach(conns, function(conn){
+                conn.send(event);
+                console.log(event);
             });
         });
     },
@@ -54,12 +73,14 @@ module.exports = ampersandModel.extend({
 
     connectToPeer: function(peer) {
         var self = this,
-            connection = self.connect(peer);
+            connection = self.socket.connect(peer);
 
         connection.on('open', function () {
+            console.log('connectToPeer > on open');
             self.trigger('connection:open', connection);
 
             connection.on('data', function (data) {
+                console.log('connectToPeer > on open > on data', data);
                 self.trigger("connection:data", {
                     connection: connection,
                     data: data

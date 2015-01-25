@@ -1,25 +1,29 @@
 var Modal = require('../base/Modal'),
     $ = require('jquery'),
-    Peer = require('../entity/Peer');
+    Peer = require('../entity/Peer'),
+    uuid = require('node-uuid');
 
 var AmpersandView = require('ampersand-view');
 
 require('../semantic-shim');
 
 
-// CreateUserDialog
+// JoinDialog
 
 module.exports = AmpersandView.extend({
-    template: require('./CreateUserDialog.jade'),
+    template: require('./JoinDialog.jade'),
     autoRender: true,
     events: {
         'click .actions .positive.button': 'onSubmit'
     },
     onSubmit: function(){
         var username = $(this.queryByHook('username')).val(),
+            targetPeer = $(this.queryByHook('connect-to')).val(),
             peer = new Peer({username: username});
 
-        window.me = peer;
+        // peer.connectToPeer(targetPeer);
+        console.log(targetPeer);
+
         this.trigger('peer:new', peer);
     },
     show: function(){

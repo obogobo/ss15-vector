@@ -5,14 +5,22 @@ var AmpersandView = require('ampersand-view'),
 module.exports = AmpersandView.extend({
   template: require('./MainView.jade'),
   autoRender: true,
+  initialize: function(opts){
+      opts = opts || {};
+      this.peer = opts.peer;
+      debugger;
+  },
   events: {
     'click [data-action="toggle-modules"]': 'toggleModules'
   },
   render: function(){
     AmpersandView.prototype.render.apply(this, arguments);
     var $column = $(this.el).find('.grid > .column').first();
-    var card = new TextChatCard();
+    var card = new TextChatCard({peer: this.peer});
     $column.append(card.render().el);
+    if(this.peer) {
+        $(this.queryByHook('username-display')).text(this.peer.username);
+    }
     return this;
   },
   toggleModules: function(){
