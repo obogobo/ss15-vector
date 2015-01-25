@@ -8,7 +8,6 @@ module.exports = AmpersandView.extend({
   initialize: function(opts){
       opts = opts || {};
       this.peer = opts.peer;
-      debugger;
   },
   events: {
     'click [data-action="toggle-modules"]': 'toggleModules'
@@ -19,7 +18,7 @@ module.exports = AmpersandView.extend({
     var card = new TextChatCard({peer: this.peer});
     $column.append(card.render().el);
     if(this.peer) {
-        $(this.queryByHook('username-display')).text(this.peer.username);
+        $(this.queryByHook('username-display')).append(' '+this.peer.username);
     }
     return this;
   },

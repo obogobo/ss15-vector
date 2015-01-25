@@ -34,6 +34,5 @@ $.getScript('http://cdn.peerjs.com/0.3.9/peer.js')
             });
 
             // Send messages
-            connection.send('Whattup!!');
         });
     });
