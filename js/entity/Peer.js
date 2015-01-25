@@ -15,6 +15,9 @@ module.exports = ampersandModel.extend({
         self.on('connection:open', log('cx:open'));
         self.on('connection:data', log('cx:data'));
         self.on('socket:open', log('sock:open'));
+
+        // x-browser
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     },
 
     createSocket: function() {
@@ -126,6 +129,25 @@ module.exports = ampersandModel.extend({
         var self = this;
 
         return _.keys(self.socket.connections);
+    },
+
+    getConnectedPeers: function(){
+        var self = this;
+
+        return _.pairs(self.socket.connections).map(function(pair){
+            var peerName = pair[0],
+                connections = pair[1];
+
+            return (connections.filter(function(conn){
+                return conn.open;
+            }).length) && peerName;
+        }).filter(_.identity);
+    },
+
+    receiveCall: function() {
+        self.on('call', function(call) {
+            self.trigger('call:received', call);
+        });
     },
 
     removePeer:  $.noop,

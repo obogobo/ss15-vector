@@ -1,6 +1,5 @@
-div(style='margin: 0 0 3em; min-height: 150px; max-height: 600px;')
-    .ui.blue.right.ribbon.label 0 connected users
+div(style='margin: 0 0 3em; min-height: 150px; max-height: 600px;overflow-y:scroll;')
     .fluid.ui.action.input(style='position: absolute; bottom: 0; left: 0; right: 0;')
         input(type='text', data-hook='entry')
         a.ui.icon.button: i.send.icon
-    .ui.comments(data-hook='chat-content', style='overflow-y:scroll;')
+    .ui.comments(data-hook='chat-content')

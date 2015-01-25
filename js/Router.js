@@ -8,34 +8,60 @@ var AmpersandRouter = require('ampersand-router'),
 
 
 var Router = module.exports = AmpersandRouter.extend({
+
     routes: {
+        // Landing page
         "": "landing",
-        "_/:id": "joinRoom",
+
+        // Create a new room
         "new": "newRoom",
-        'join': 'joinRoom'
+        "new/:id": "newRoom",
+        "chat": "newRoom",
+
+        // Join an existing room
+        'join': 'joinRoom',
+        "join/:id": "joinRoom"
     },
+
     setView: function(view){
         $('body').html('').append(view.render().el);
     },
+
     landing: function(){
         this.setView(new LandingView());
     },
+
+    newRoom: function(id){
+        var opts;
+        if(id){
+            opts = {id:id};
+        }
+        var dialog = new CreateUserDialog(opts);
+        dialog.show();
+        dialog.on('peer:new', this.createRoomWithPeer.bind(this));
+    },
+
     joinRoom: function(id){
-        this.setView(new MainView());
-        new InviteDialog({id: id}).show();
-    },
-    newRoom: function(){
-        var dialog = new CreateUserDialog();
+        var opts;
+        if(id){
+            opts = {id: id};
+        }
+        var dialog = new JoinDialog(opts);
         dialog.show();
         dialog.on('peer:new', this.createRoomWithPeer.bind(this));
     },
-    joinRoom: function(){
-        var dialog = new JoinDialog();
-        dialog.show();
-        dialog.on('peer:new', this.createRoomWithPeer.bind(this));
-    },
+
     createRoomWithPeer: function(peer){
         var view = new MainView({peer: peer});
         this.setView(view);
+
+        // The #chat hash is just for looks. If we come in on this hash, then
+        // we need to prompt the user for a screen name.
+        if(history.pushState) {
+            history.pushState(null, null, '#chat');
+        }
+        else {
+            location.hash = '#chat';
+        }
     }
 });
