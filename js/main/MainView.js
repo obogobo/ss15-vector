@@ -1,6 +1,7 @@
 var AmpersandView = require('ampersand-view'),
     $ = require('jquery'),
-    TextChatCard = require('../cards/text-chat/TextChatCard');
+    TextChatCard = require('../cards/text-chat/TextChatCard'),
+    VideoStreamCard = require('../cards/video-stream/VideoStreamCard');
 
 module.exports = AmpersandView.extend({
   template: require('./MainView.jade'),
@@ -10,7 +11,12 @@ module.exports = AmpersandView.extend({
       this.peer = opts.peer;
   },
   events: {
-    'click [data-action="toggle-modules"]': 'toggleModules'
+    'click [data-action="toggle-modules"]': 'toggleModules',
+    'click [data-action="load-view"]': 'loadView'
+  },
+  cards: {
+    textchat: TextChatCard,
+    videostream: VideoStreamCard
   },
   render: function(){
     AmpersandView.prototype.render.apply(this, arguments);
@@ -32,5 +38,12 @@ module.exports = AmpersandView.extend({
     } else {
       $submenu.slideDown();
     }
+  },
+  loadView: function(e) {
+      var view = $(e.target).data('view');
+
+      this.card = new this.cards[view]({ peer: this.peer });
+      this.render();
+      this.card.trigger('rendered');
   }
 });

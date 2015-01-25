@@ -124,6 +124,12 @@ module.exports = ampersandModel.extend({
         return _.keys(self.socket.connections);
     },
 
+    receiveCall: function() {
+        self.on('call', function(call) {
+            self.trigger('call:received', call);
+        });
+    },
+
     removePeer:  $.noop,
 
     extraProperties: 'allow'
