@@ -11,20 +11,23 @@ module.exports = Card.extend({
     },
     initialize: function(opts){
         opts = opts || {};
-        this.peer = opts.peer;
+        window.me = this.peer = opts.peer;
         if(this.peer){
             this.peer.on('connection:data', this.onData.bind(this));
         }
     },
-    onData: function(data){
+    onData: function(event){
+        var data = event.data;
+        console.log('got data for our chat!', data);
         if(data.type !== 'text-chat') return;
-        $(this.queryByHook('chat-content')).append('<p>'+data.content+'</p>');
+        $(this.queryByHook('chat-content')).append('<br>'+data.content);
     },
     onKey: function(e){
         var $field = $(e.target), entry = $field.val();
         if(e.which !== 13) return;
         $field.val('');
         if(this.peer){
+            console.log('broadcasting', entry)
             this.peer.broadcast({
                 type: 'text-chat',
                 content: entry

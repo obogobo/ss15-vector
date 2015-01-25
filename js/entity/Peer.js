@@ -9,6 +9,12 @@ module.exports = ampersandModel.extend({
 
         self.username = opts.username || uuid.v4();
         self.createSocket();
+        function log(x){
+            return console.log.bind(console, x);
+        }
+        self.on('connection:open', log('cx:open'));
+        self.on('connection:data', log('cx:data'));
+        self.on('socket:open', log('sock:open'));
     },
 
     createSocket: function() {
@@ -43,14 +49,9 @@ module.exports = ampersandModel.extend({
         var self = this;
 
         _.forEach(self.getPeers(), function(peerID){
-            var conns = _.findWhere(self.socket.connections[peerID], {
-                open: true,
-                disconnected: false,
-                destroyed: false
-            });
-            _.forEach(conns, function(conn){
+            _.forEach(self.socket.connections[peerID], function(conn){
                 conn.send(event);
-                console.log(event);
+                console.log('>>>>>',event);
             });
         });
     },
