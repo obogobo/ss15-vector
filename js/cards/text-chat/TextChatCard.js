@@ -96,7 +96,7 @@ module.exports = Card.extend({
         }
         localFile[data.index] = data.chunk;
         count = _.filter(localFile, Boolean).length;
-        $progress.progress({percent: count*100/data.numChunks});
+        // $progress.progress({percent: count*100/data.numChunks});
         // run thru, make sure there's no nullz
         if(_.every(localFile)){
             // we have the whole file
@@ -180,7 +180,7 @@ module.exports = Card.extend({
                 type: 'file:request',
                 id: fileID
             });
-            $progress.show().progress({percent: 0});
+            // $progress.show().progress({percent: 0});
         }.bind(this));
         $chatContent.append($el);
     }
