@@ -73,8 +73,7 @@ module.exports = Card.extend({
     },
 
     bindCallEvents: function(call) {
-        var $video = $('<video id="' + call.peer + '" autoplay>'),
-            view = this;
+        var $video = $('<video id="' + call.peer + '" autoplay="autoplay" style="width:250px">');
 
         call.on('stream', function(remoteStream) {
             // Show stream in some video/canvas element.
