@@ -21,7 +21,7 @@ module.exports = AmpersandView.extend({
             targetPeer = $(this.queryByHook('connect-to')).val(),
             peer = new Peer({username: username});
 
-        // peer.connectToPeer(targetPeer);
+        peer.connectToPeer(targetPeer);
         console.log(targetPeer);
 
         this.trigger('peer:new', peer);
