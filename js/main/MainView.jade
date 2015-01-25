@@ -1,29 +1,45 @@
 div(style='padding-top: 35px;')
-  .ui.fixed.purple.inverted.tiered.main.menu
-    a.item(data-action="toggle-modules")
-      i.plus.icon
-      |  Cards
-    a.item(data-hook='username-display')
-    .right.menu
-      a.item
-        i.mail.icon.outline
-        |  Invite
-      a.item
-        i.sign.out.icon
-        |  Leave
-    .ui.sub.menu(style='display:none;', data-hook='modules-submenu')
-      a.item(data-action="load-view", data-view='textchat')
-        i.comments.icon
-        |  Text chat
-      a.disabled.item(data-action="load-view")
-        i.music.icon
-        |  Music stream
-      a.disabled.item(data-action="load-view")
-        i.file.icon
-        |  File drop
-      a.item(data-action="load-view", data-view='videostream')
-        i.record.icon
-        |  Webcam stream
-  .ui.container(style="margin: auto; max-width: 1000px; padding: 2em;"): .ui.one.column.stackable.grid // <= change to two
-    .column
-    //.column
+    .ui.fixed.purple.inverted.tiered.main.menu
+        a.item(data-action="online-users")
+            i.users.icon
+            span  0 users online
+        a.item(data-action="now-playing")
+            i.play.icon
+            span  No music playing
+        a.item(data-action="toggle-modules")
+            i.plus.icon
+            |  Cards
+        .right.menu
+            a.ui.pointing.dropdown.link.item(data-hook='username-display')
+                i.user.icon
+                span.text
+                .menu
+                    .header Webcam settings
+                    .item: .ui.toggle.checkbox
+                        input(type='checkbox', data-hook='video-active') 
+                        label Video
+                    .item: .ui.toggle.checkbox
+                        input(type='checkbox', data-hook='audio-active')
+                        label Audio
+            a.item
+                i.mail.icon.outline
+                |  Invite
+            a.item
+                i.sign.out.icon
+                |  Leave
+        .ui.sub.menu(style='display:none;', data-hook='modules-submenu')
+            a.item(data-action="load-view", data-view='textchat')
+                i.comments.icon
+                |  Text chat
+            a.disabled.item(data-action="load-view")
+                i.music.icon
+                |  Music stream
+            a.disabled.item(data-action="load-view")
+                i.file.icon
+                |  File drop
+            a.item(data-action="load-view", data-view='videostream')
+                i.record.icon
+                |  Webcam stream
+    .ui.container(style="margin: auto; max-width: 1000px; padding: 2em;"): .ui.one.column.stackable.grid
+        .column
+        //.column

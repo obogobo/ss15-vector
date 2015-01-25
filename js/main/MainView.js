@@ -20,12 +20,14 @@ module.exports = AmpersandView.extend({
   },
   render: function(){
     AmpersandView.prototype.render.apply(this, arguments);
-    var $column = $(this.el).find('.grid > .column').first();
+    var $el = $(this.el), $column = $el.find('.grid > .column').first();
     this.card = this.card || new TextChatCard({peer: this.peer});
     $column.empty().append(this.card.render().el);
     if(this.peer) {
-        $(this.queryByHook('username-display')).text(this.peer.username);
+        $(this.queryByHook('username-display')).children('span').text(' '+this.peer.username);
     }
+    $el.find('.ui.dropdown').dropdown({action:'nothing'});
+    $el.find('.ui.checkbox').checkbox();
     return this;
   },
   toggleModules: function(){

@@ -6,7 +6,10 @@
   "exclude": [
     "bower.json",
     "server.js",
-    "node_modules"
+    "node_modules",
+    "bower_components/semantic-ui/examples",
+    "bower_components/semantic-ui/src",
+    "bower_components/semantic-ui/tasks"
   ],
   "routes": {
     "**": "index.html"

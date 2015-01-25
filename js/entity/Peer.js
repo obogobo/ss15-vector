@@ -36,11 +36,9 @@ module.exports = ampersandModel.extend({
                 // incoming data events
                 conn.on('data', function(data) {
                     console.log('[' + conn.peer + ']', data);
-                    self.onData(data);
+                    self.onData(data, conn);
                 });
 
-                // send an ack
-                conn.send('Hey, ' + conn.peer);
             });
         });
 
@@ -60,11 +58,26 @@ module.exports = ampersandModel.extend({
         });
     },
 
-    onData: function(data) {
+    onData: function(data, connection) {
         var self = this;
 
+        // f-yeah switch
+        switch(data.type){
+            case 'peer-list':
+                return self.connectToPeers(_.filter(data.peers, function(peer){
+                    return peer !== self.username;
+                }));
+            case 'request-peers':
+                // send a list of connected peers
+                return connection.send({
+                    type: 'peer-list',
+                    peers: self.getPeers()
+                });
+        }
+
         self.trigger("connection:data", {
-            data: data
+            data: data,
+            connection: connection
         });
     },
 
@@ -84,20 +97,18 @@ module.exports = ampersandModel.extend({
             console.log('connectToPeer > on open');
             self.trigger('connection:open', connection);
 
+            if(self.getPeers().length === 1){
+                connection.send({type:'request-peers'});
+            }
+
             connection.on('data', function (data) {
                 console.log('connectToPeer > on open > on data', data);
-                self.trigger("connection:data", {
-                    connection: connection,
-                    data: data
-                });
+                self.onData(data, connection);
             });
 
             connection.on('close', function () {
                 self.trigger('connection:close');
             });
-
-            // announce
-            connection.send('Whattup!!');
         });
 
         return connection;
