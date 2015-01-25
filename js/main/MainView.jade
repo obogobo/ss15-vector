@@ -28,18 +28,12 @@ div(style='padding-top: 35px;')
                 i.sign.out.icon
                 |  Leave
         .ui.sub.menu(style='display:none;', data-hook='modules-submenu')
-            a.item(data-action="load-view", data-view='textchat')
+            a.item(data-action="toggle-view", data-view='textchat')
                 i.comments.icon
                 |  Text chat
-            a.disabled.item(data-action="load-view")
-                i.music.icon
-                |  Music stream
-            a.disabled.item(data-action="load-view")
-                i.file.icon
-                |  File drop
-            a.item(data-action="load-view", data-view='videostream')
+            a.item(data-action="toggle-view", data-view='videostream')
                 i.record.icon
                 |  Webcam stream
-    .ui.container(style="margin: auto; max-width: 1000px; padding: 2em;"): .ui.one.column.stackable.grid
-        .column
-        //.column
+    .ui.container(style="margin: auto; max-width: 1000px; padding: 2em;"): .ui.stackable.grid
+        .column.card-container(id='videostream' style='display: none;')
+        .column.card-container.sixteen.wide(id='textchat')
