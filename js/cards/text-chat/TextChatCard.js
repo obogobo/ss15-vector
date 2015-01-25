@@ -20,7 +20,7 @@ module.exports = Card.extend({
         var data = event.data;
         console.log('got data for our chat!', data);
         if(data.type !== 'text-chat') return;
-        $(this.queryByHook('chat-content')).append('<br>'+data.content);
+        $(this.queryByHook('chat-content')).append('<p><tt>['+(event.connection && event.connection.peer)+']</tt>'+data.content+'</p>');
     },
     onKey: function(e){
         var $field = $(e.target), entry = $field.val();
