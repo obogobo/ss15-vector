@@ -15,6 +15,9 @@ module.exports = ampersandModel.extend({
         self.on('connection:open', log('cx:open'));
         self.on('connection:data', log('cx:data'));
         self.on('socket:open', log('sock:open'));
+
+        // x-browser
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     },
 
     createSocket: function() {

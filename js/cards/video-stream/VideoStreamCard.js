@@ -14,8 +14,6 @@ module.exports = Card.extend({
         var view = this;
 
         this.peer = options.peer;
-        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
         this.on('rendered', function() {
             view.startVideoStream();
         });
@@ -24,8 +22,10 @@ module.exports = Card.extend({
             view.answerCall(call);
         })
     },
+
     startVideoStream: function() {
         var view = this;
+
         navigator.getUserMedia({ video: true, audio: true }, function(stream) {
             view.stream = stream;
             $('#my-vidya').prop('src', URL.createObjectURL(stream));
@@ -33,6 +33,7 @@ module.exports = Card.extend({
             console.log('Failed to get local stream' ,err);
         });
     },
+
     makeCall: function(e) {
         var receiver = 'mcbex1',
             call = this.peer.socket.call(receiver, this.stream);
@@ -43,6 +44,7 @@ module.exports = Card.extend({
             $('#ur-vidya').prop('src', URL.createObjectURL(remoteStream));
         });
     },
+
     answerCall: function(call) {
         $('div.pink').hide();
         $('div.teal').show();
