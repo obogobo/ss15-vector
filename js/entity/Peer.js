@@ -47,14 +47,15 @@ module.exports = ampersandModel.extend({
         });
 
         socket.on('call', function(call) {
-            self.trigger('call:received', call);
             _.forOwn(self.socket.connections, function(conns, userID){
                 _.forEach(conns, function(conn){
-                    if(conn.metadata && conn.metadata.type === 'music') {
+                    if(conn !== call && conn.open && conn.metadata && conn.metadata.type === 'music') {
                         conn.close();
                     }
                 });
             });
+
+            self.trigger('call:received', call);
         });
     },
 
@@ -68,9 +69,16 @@ module.exports = ampersandModel.extend({
         });
     },
 
-    broadcastStream: function(stream, metadata){
-        var self = this;
-        _.forEach(self.getConnectedPeers(), function(peerID){
+    broadcastStream: function(stream, metadata, opt){
+        var self = this, peers = self.getConnectedPeers();
+
+        opt = opt || {};
+
+        if(opt.self){
+            peers = peers.concat(self.username);
+        }
+
+        _.forEach(peers, function(peerID){
             self.socket.call(peerID, stream, {metadata: metadata});
         });
     },

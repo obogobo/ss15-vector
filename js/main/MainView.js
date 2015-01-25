@@ -56,11 +56,15 @@ module.exports = AmpersandView.extend({
 
         $('[data-action="now-playing"] > span').text(meta.filename);
 
-        call.answer(null); // Answer the call with an A/V stream.
+        call.on('error', console.log.bind(console,' CALL ERROR!!'));
+        call.on('close', console.log.bind(console,' CALL CLOSED!!'));
+
         call.on('stream', function(remoteStream) {
             // Show stream in some video/canvas element.
             $('#current-music').prop('src', URL.createObjectURL(remoteStream));
         });
+        debugger;
+        call.answer(); // Answer the call with an A/V stream.
 
   },
   onMusicPickerSelection: function(e) {
@@ -91,7 +95,9 @@ module.exports = AmpersandView.extend({
                   type: 'music',
                   filename: musicFile.name
               });
-              
+
+              $('#current-music').prop('src', URL.createObjectURL(stream));
+
               $('[data-action="now-playing"] > span').text(musicFile.name);
           });
       };

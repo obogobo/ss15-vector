@@ -28,7 +28,7 @@ module.exports = Card.extend({
             if ($('#my-vidya').is(':visible')) {
                 view.answerCall(call);
             } else {
-                call.close(view.stream);
+                // call.close(view.stream);
             }
         })
     },
