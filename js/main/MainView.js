@@ -53,9 +53,11 @@ module.exports = AmpersandView.extend({
   },
   onCallReceived: function(call){
         var self = this,
-            meta = call.metadata;
+            meta = call.metadata || {};
 
-        $('[data-action="now-playing"] > span').text(meta.filename);
+        if(!call.metadata && !call.metadata.filename) return;
+
+        $('[data-action="now-playing"] > span').text(meta.filename || 'Untitled');
 
         call.on('error', console.log.bind(console,' CALL ERROR!!'));
         call.on('close', console.log.bind(console,' CALL CLOSED!!'));

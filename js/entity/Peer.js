@@ -28,7 +28,7 @@ module.exports = ampersandModel.extend({
 
         // send available to connectTo
         socket.on('open', function() {
-            alert('ready');
+            console.log('ready');
             self.trigger('socket:open');
         });
 
